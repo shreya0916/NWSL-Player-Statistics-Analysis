@@ -1,0 +1,75 @@
+---
+title: "HW5"
+author: "Shreya Ravi Shankar"
+date: "2025-10-24"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+library(dplyr)
+library(ggplot2)
+
+portland <- read.csv("portland thorns - Sheet1.csv", header = TRUE, stringsAsFactors = FALSE)
+angel <- read.csv("angel city - Sheet1.csv", header = TRUE, stringsAsFactors = FALSE)
+gotham <- read.csv("gotham mc - Sheet1.csv", header = TRUE, stringsAsFactors = FALSE)
+
+#rq 1:
+all_players <- bind_rows(portland, angel, gotham)
+names(all_players)
+
+age_ranges <- as.character(all_players$`X.2`)  # Age
+all_players$`X.4` <- as.numeric(all_players$`X.4`)  # Minutes
+all_players$`X.6` <- as.numeric(all_players$`X.6`)  # Goals
+
+age_split <- strsplit(as.character(all_players$`X.2`), "-")
+
+
+age_numeric <- sapply(age_split, function(x) {
+  years <- as.numeric(x[1])
+  days <- as.numeric(x[2])
+  total_age <- years + days / 365
+  return(total_age)
+})
+
+all_players$AgeNum <- age_numeric
+
+# Plot histogram of ages
+ggplot(all_players, aes(x = AgeNum)) +
+  geom_histogram(binwidth = 1, fill = "lightblue", color = "black") +
+  labs(title = "Age Distribution of NWSL Players", x = "Age (years)", y = "Count") +
+  theme_minimal()
+
+#rq 2:
+all_players_clean <- all_players[!is.na(all_players$X.4) & !is.na(all_players$X.6), ]
+
+# Highlight Angelina Anderson
+highlight_player <- "Angelina Anderson"
+highlight_row <- which(all_players_clean$`Playing.Time` == highlight_player)
+
+# scatter plot
+goals_plot <- ggplot(all_players_clean, aes(x = X.4, y = X.6)) +
+  geom_point(alpha = 0.6, color = "blue") +  # all players
+  geom_point(data = all_players_clean[highlight_row, ],
+             aes(x = X.4, y = X.6),
+             color = "red", size = 4) +       # highlighted player
+  geom_text(data = all_players_clean[highlight_row, ],
+            aes(x = X.4, y = X.6, label = `Playing.Time`),
+            vjust = -1, hjust = 0.5, color = "red", fontface = "bold") +
+  labs(title = "Goals vs Minutes Played (NWSL Players)",
+       x = "Minutes Played", y = "Goals Scored") +
+  theme_minimal()
+
+# display plot
+goals_plot
+
+# Save both plots as PNGs
+ggsave("player_age_distribution.png", width = 7, height = 5)
+ggsave("goals_vs_minutes.png", plot = goals_plot, width = 7, height = 5)
+
+
+```
