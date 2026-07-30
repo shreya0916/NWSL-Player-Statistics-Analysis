@@ -1,7 +1,7 @@
-# HW5
+# NWSL-Player-Statistics-Analysis
 
 ## Overview
-This repository contains an analysis of player statistics from three NWSL teams: Portland Thorns, Angel City, and Gotham MC.
+This project explores player statistics across three National Women's Soccer League (NWSL) teams: Portland Thorns FC, Angel City FC, and Gotham FC. Using R and real-world player data, I examine patterns in player age and investigate the relationship between playing time and goal scoring.
 
 1. **Age distribution of professional women soccer players**  
 2. **Relationship between minutes played and goals scored**
