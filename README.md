@@ -2,6 +2,10 @@
 
 ## Overview
 This project explores player statistics across three National Women's Soccer League (NWSL) teams: Portland Thorns FC, Angel City FC, and Gotham FC. Using R and real-world player data, I examine patterns in player age and investigate the relationship between playing time and goal scoring.
+- Analyzed player performance data from three National Women's Soccer League teams using R.
+- Performed exploratory data analysis to examine age distributions and relationships between playing time and goal scoring.
+- Built data visualizations with ggplot2 to communicate trends in player performance.
+- Documented methodology and analysis in reproducible R Markdown reports.
 
 1. **Age distribution of professional women soccer players**  
 2. **Relationship between minutes played and goals scored**
